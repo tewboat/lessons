@@ -60,7 +60,7 @@ class Main {
         }
     }
 
-   static void logicalLoopDemo() {
+    static void logicalLoopDemo() {
         //logical loops
         boolean isAuth = false;
         String userPass = "12345";
@@ -79,53 +79,74 @@ class Main {
                 System.out.println("Auth failed, try again");
             }
         }
-       System.out.println("next.....");
+        System.out.println("next.....");
 
 //        do {
 //
 //        }while ();
     }
 
-    static void numericLoopDemo() throws  Exception{
-        for(int i = 100; i > 0; i -= 10 ){
+    static void numericLoopDemo() throws Exception {
+        for (int i = 100; i > 0; i -= 10) {
             System.out.println(i);
             Thread.sleep(1000);
         }
     }
 
     public static void main(String[] args) {
-        double result = 0;
-        Scanner sc = new Scanner(System.in);
-        double a;
-        double b;
-        String answer = "yes";
-        while (answer.equals("yes")) {
-            System.out.println("введите число 1");
-            a = sc.nextDouble();
-            System.out.println("введите число 2");
-            b = sc.nextDouble();
-            System.out.println("введите действие (+, -, * или /)");
-            String operation = sc.next();
-            switch (operation) {
-                case "+":
-                    result = (a + b);
-                    break;
-                case "-":
-                    result = (a - b);
-                    break;
-                case "*":
-                    (result) = (a * b);
-                    break;
-                case "/":
-                    (result) = (a / b);
-            }
-            System.out.println("ответ: " + result);
-            System.out.println("продолжить?");
-            answer = sc.next();
-        }
-        if (answer.equals("stop")){
-            System.out.println("bye, kid!");
-        }
+//        double result = 0;
+//        Scanner sc = new Scanner(System.in);
+//        double a;
+//        double b;
+//        String answer = "yes";
+//        while (answer.equals("yes")) {
+//            System.out.println("введите число 1");
+//            a = sc.nextDouble();
+//            System.out.println("введите число 2");
+//            b = sc.nextDouble();
+//            System.out.println("введите действие (+, -, * или /)");
+//            String operation = sc.next();
+//            switch (operation) {
+//                case "+":
+//                    result = (a + b);
+//                    break;
+//                case "-":
+//                    result = (a - b);
+//                    break;
+//                case "*":
+//                    (result) = (a * b);
+//                    break;
+//                case "/":
+//                    (result) = (a / b);
+//            }
+//            System.out.println("ответ: " + result);
+//            System.out.println("продолжить?");
+//            answer = sc.next();
+//        }
+//        if (answer.equals("stop")){
+//            System.out.println("bye, kid!");
+//        }
+        byte var1 = 0;
+        int var2 = 1000;
+//        var2 = var1;
+        var1 = (byte) var2;
+        System.out.println(var1);
     }
 
+    void calculate() {
+        calculate();
+        calculate(5, 5);
+    }
+
+    int calculate(String[] arr) {
+        return arr.length;
+    }
+
+    int calculate(String stroke) {
+        return stroke.length();
+    }
+
+    int calculate(int a, int b) {
+        return a + b;
+    }
 }
