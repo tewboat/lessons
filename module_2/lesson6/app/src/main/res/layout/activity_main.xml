@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:weightSum="2">
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selectors"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+
+        <Button
+            android:id="@+id/btnBgSelector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_bg_selector"
+            android:padding="8dp"
+            android:text="Colored Selector" />
+
+        <Button
+            android:id="@+id/btnBgSelectorDisabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_bg_selector_disabled"
+            android:enabled="false"
+            android:padding="8dp"
+            android:text="Color Selector Disabled" />
+
+        <Button
+            android:id="@+id/btnDrawableSelector"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_drawable_selector"
+            android:padding="16dp" />
+
+        <ImageButton
+            android:id="@+id/imgButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/green"
+            android:padding="8dp"
+            android:scaleType="center"
+            android:src="@drawable/btn_drawable_selector" />
+
+        <Button
+            android:id="@+id/btnTxtSelector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Text Selector"
+            android:textColor="@drawable/btn_txt_selector" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shapes+Selectors"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <Button
+            android:id="@+id/btnRoundShape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_shape_round"
+            android:padding="8dp"
+            android:text="ROUND SHAPE" />
+
+        <Button
+            android:id="@+id/btnBgShape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_shape_gradient"
+            android:padding="8dp"
+            android:text="SHAPE WITH GRADIENT" />
+
+
+        <Button
+            android:id="@+id/btnSelectorShape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_selector_shape"
+            android:padding="8dp"
+            android:text="SELECTOR SHAPE" />
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_shape_gradient"
+            android:padding="8dp"
+            android:scaleType="center"
+            android:src="@drawable/btn_drawable_selector" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_shape_capsule"
+            android:padding="8dp"
+            android:text="Text Selector"
+            android:textColor="@drawable/btn_txt_selector" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
