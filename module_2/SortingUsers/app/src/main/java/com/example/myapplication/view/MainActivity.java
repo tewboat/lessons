@@ -7,8 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.example.myapplication.R;
+import com.example.myapplication.domain.Car;
 import com.example.myapplication.interactor.CarsInteractor;
+import com.example.myapplication.interactor.comparator.CarPowerComparator;
 import com.example.myapplication.view.adapter.CarsAdapter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         carsRecycler.setLayoutManager(new LinearLayoutManager(this));
         carsAdapter = new CarsAdapter(carsInteractor.getCars());
         carsRecycler.setAdapter(carsAdapter);
+
+        ArrayList<Car> sortedCars = carsInteractor.sortCars(carsAdapter.getCarsList(), new CarPowerComparator());
+        carsAdapter.updateAdapter(sortedCars);
     }
 
 }

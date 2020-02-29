@@ -14,7 +14,7 @@ import com.example.myapplication.domain.Car;
 import java.util.ArrayList;
 
 public class CarsAdapter extends RecyclerView.Adapter<CarHolder> {
-    final ArrayList<Car> carsList;
+    ArrayList<Car> carsList;
 
     public CarsAdapter(ArrayList<Car> carsList) {
         this.carsList = carsList;
@@ -25,8 +25,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarHolder> {
     }
 
     public void updateAdapter(ArrayList<Car> cars) {
-        carsList.clear();
-        carsList.addAll(cars);
+        this.carsList = cars;
         notifyDataSetChanged();
     }
 
