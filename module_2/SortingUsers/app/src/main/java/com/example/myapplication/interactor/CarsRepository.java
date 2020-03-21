@@ -42,7 +42,7 @@ public class CarsRepository {
         ArrayList<Car> carsList = new ArrayList();
         for (int i = 0; i < count; i++) {
             Random rand = new Random();
-            carsList.add(new Car(carNames[rand.nextInt(carNames.length)], carModels[rand.nextInt(carModels.length)], rand.nextInt(300) + 90, rand.nextDouble() + 1.3, rand.nextInt(200000) + 500));
+            carsList.add(new Car(carNames[rand.nextInt(carNames.length)], carModels[rand.nextInt(carModels.length)], rand.nextInt(300) + 90, Math.round(rand.nextDouble() + 1.3), rand.nextInt(200000) + 500));
         }
         return carsList;
     }

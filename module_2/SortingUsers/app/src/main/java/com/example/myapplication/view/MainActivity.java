@@ -31,8 +31,5 @@ public class MainActivity extends AppCompatActivity {
         carsAdapter = new CarsAdapter(carsInteractor.getCars());
         carsRecycler.setAdapter(carsAdapter);
 
-        ArrayList<Car> sortedCars = carsInteractor.sortCars(carsAdapter.getCarsList(), new CarPowerComparator());
-        carsAdapter.updateAdapter(sortedCars);
     }
-
 }
