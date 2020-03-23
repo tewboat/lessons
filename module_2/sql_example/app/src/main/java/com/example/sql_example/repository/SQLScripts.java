@@ -51,24 +51,12 @@ public class SQLScripts {
     }
 
 
-    public static String getFriendListScript(int userID){
+    public static String getUserListScript(int userID){
         return "select u.id, u.name from user u, userlinks ul " +
                 "where (ul.firstID = " + userID +
                 " or ul.secondID = " + userID + ") and " +
                 "(u.id = ul.firstID or u.id = ul.secondID) and " +
                 "u.id != " + userID + " and isConfirm = 1;";
-    }
-
-    public static String getReceivedRequestsListScript(int userID){
-        return "select u.id, u.name from user u, userlinks ul " +
-                "where ul.secondID = " + userID + " and " +
-                "isConfirm = -1 and u.id = ul.firstID;";
-    }
-
-    public static String getSentRequestsListScript(int userID){
-        return "select u.id, u.name from user u, userlinks ul " +
-                "where ul.firstID = " + userID + " and " +
-                "isConfirm = -1 and u.id = ul.secondID;";
     }
 
 }
