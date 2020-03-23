@@ -1,7 +1,7 @@
 package com.example.sql_example.repository;
 
 public class SQLScripts {
-    public static String initDbScript() {
+    public static String initUsersDbScript() {
         return "create table user(" +
                 "id integer primary key autoincrement," +
                 "name text not null," +
@@ -38,6 +38,37 @@ public class SQLScripts {
         return "select * from user" +
                 " limit " + limit +
                 ";";
+    }
+
+    public static String initUserLinksDbScript(){
+        return "create table userlinks " +
+                "id integer primary key autoincrement, " +
+                "firstID integer, " +
+                "secondID integer, " +
+                "isConfirm integer " +
+                "foreign key(firstID) references user(id), " +
+                "foreign key(secondID) references user(id));";
+    }
+
+
+    public static String getFriendListScript(int userID){
+        return "select u.id, u.name from user u, userlinks ul " +
+                "where (ul.firstID = " + userID +
+                " or ul.secondID = " + userID + ") and " +
+                "(u.id = ul.firstID or u.id = ul.secondID) and " +
+                "u.id != " + userID + " and isConfirm = 1;";
+    }
+
+    public static String getReceivedRequestsListScript(int userID){
+        return "select u.id, u.name from user u, userlinks ul " +
+                "where ul.secondID = " + userID + " and " +
+                "isConfirm = -1 and u.id = ul.firstID;";
+    }
+
+    public static String getSentRequestsListScript(int userID){
+        return "select u.id, u.name from user u, userlinks ul " +
+                "where ul.firstID = " + userID + " and " +
+                "isConfirm = -1 and u.id = ul.secondID;";
     }
 
 }

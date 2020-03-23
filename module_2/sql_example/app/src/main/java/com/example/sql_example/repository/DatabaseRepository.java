@@ -5,12 +5,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.sql_example.domain.User;
+import com.example.sql_example.domain.UserProfiles;
 
 import java.util.ArrayList;
 
 public class DatabaseRepository {
     private final String TAG = "DatabaseRepository";
-    DatabaseHelper databaseHelper;
+    private DatabaseHelper databaseHelper;
 
     public DatabaseRepository(Context context) {
         initDb(context);
@@ -68,7 +69,7 @@ public class DatabaseRepository {
             int nameColIndex = userCursor.getColumnIndex("name");
             int passwordColIndex = userCursor.getColumnIndex("password");
 
-            ArrayList<User> userList = new ArrayList();
+            ArrayList<User> userList = new ArrayList<User>();
             do {
                 // получаем значения по номерам столбцов
                 User user = new User(userCursor.getString(idColIndex),
@@ -80,6 +81,31 @@ public class DatabaseRepository {
             } while (userCursor.moveToNext());
             userCursor.close();
             return userList;
+        } else {
+            userCursor.close();
+            return null;
+        }
+    }
+
+    public ArrayList<UserProfiles> getFriendsList(int userID){
+        SQLiteDatabase db;
+        Cursor userCursor;
+        db = databaseHelper.getWritableDatabase();
+        userCursor = db.rawQuery(SQLScripts.getFriendListScript(userID), null);
+
+        if(userCursor.moveToFirst()){
+            int idColIndex = userCursor.getColumnIndex("id");
+            int nameColIndex = userCursor.getColumnIndex("name");
+
+            ArrayList<UserProfiles> friendList = new ArrayList<UserProfiles>();
+
+            do {
+                UserProfiles friend = new UserProfiles(userCursor.getString(idColIndex), userCursor.getString(nameColIndex));
+                friendList.add(friend);
+
+            } while (userCursor.moveToNext());
+            userCursor.close();
+            return friendList;
         } else {
             userCursor.close();
             return null;

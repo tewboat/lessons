@@ -2,9 +2,8 @@ package com.example.sql_example.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -57,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
             final String password = inputPassword.getText().toString();
             User user = usersInteractor.getUser(login, password);
             if (user != null) {
-                Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, FriendsList.class);
+                intent.putExtra("USER_NAMR", user.name);
+                intent.putExtra("USER_PASSWORD", user.password);
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
             }

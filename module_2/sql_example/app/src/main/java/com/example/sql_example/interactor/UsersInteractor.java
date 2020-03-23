@@ -3,6 +3,7 @@ package com.example.sql_example.interactor;
 import android.content.Context;
 
 import com.example.sql_example.domain.User;
+import com.example.sql_example.domain.UserProfiles;
 import com.example.sql_example.repository.DatabaseRepository;
 
 import java.util.ArrayList;
@@ -25,4 +26,6 @@ public class UsersInteractor {
     public ArrayList<User> getUsers(int limit) {
         return repository.getUsers(limit);
     }
+
+    public ArrayList<UserProfiles> getFriendList(int userID){return repository.getFriendsList(userID);}
 }

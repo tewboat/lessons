@@ -17,9 +17,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d(TAG, "Инициализация базы...");
-        db.execSQL(SQLScripts.initDbScript());
-        Log.d(TAG, "База инициализирована");
+        Log.d(TAG, "Инициализация базы пользователей");
+        db.execSQL(SQLScripts.initUsersDbScript());
+        Log.d(TAG, "База пользователей инициализирована");
+        Log.d(TAG, "Инициализация базы связей пользователей");
+        db.execSQL(SQLScripts.initUserLinksDbScript());
+        Log.d(TAG, "База связей пользователей инициализирована");
     }
 
     @Override
