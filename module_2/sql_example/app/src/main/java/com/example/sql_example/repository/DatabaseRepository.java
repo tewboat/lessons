@@ -8,6 +8,7 @@ import com.example.sql_example.domain.User;
 import com.example.sql_example.domain.UserProfiles;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class DatabaseRepository {
     private final String TAG = "DatabaseRepository";
@@ -44,7 +45,7 @@ public class DatabaseRepository {
 
             do {
                 // получаем значения по номерам столбцов
-                User user = new User(userCursor.getString(idColIndex),
+                User user = new User(userCursor.getInt(idColIndex),
                         userCursor.getString(nameColIndex),
                         userCursor.getString(passwordColIndex));
                 userCursor.close();
@@ -69,10 +70,10 @@ public class DatabaseRepository {
             int nameColIndex = userCursor.getColumnIndex("name");
             int passwordColIndex = userCursor.getColumnIndex("password");
 
-            ArrayList<User> userList = new ArrayList<User>();
+            ArrayList<User> userList = new ArrayList<>();
             do {
                 // получаем значения по номерам столбцов
-                User user = new User(userCursor.getString(idColIndex),
+                User user = new User(userCursor.getInt(idColIndex),
                         userCursor.getString(nameColIndex),
                         userCursor.getString(passwordColIndex));
                 userList.add(user);
@@ -87,7 +88,7 @@ public class DatabaseRepository {
         }
     }
 
-    public ArrayList<UserProfiles> getFriendsList(int userID){
+    public void getFriendsList(int userID, ArrayList<UserProfiles> userProfilesArrayList){
         SQLiteDatabase db;
         Cursor userCursor;
         db = databaseHelper.getWritableDatabase();
@@ -97,18 +98,98 @@ public class DatabaseRepository {
             int idColIndex = userCursor.getColumnIndex("id");
             int nameColIndex = userCursor.getColumnIndex("name");
 
-            ArrayList<UserProfiles> friendList = new ArrayList<UserProfiles>();
-
             do {
-                UserProfiles friend = new UserProfiles(userCursor.getString(idColIndex), userCursor.getString(nameColIndex));
-                friendList.add(friend);
+                UserProfiles friend = new UserProfiles(userCursor.getInt(idColIndex), userCursor.getString(nameColIndex), 1);
+                userProfilesArrayList.add(friend);
 
             } while (userCursor.moveToNext());
             userCursor.close();
-            return friendList;
         } else {
             userCursor.close();
-            return null;
         }
     }
+    public void getReceivedRequestsList(int userID, ArrayList<UserProfiles> userProfilesArrayList){
+        SQLiteDatabase db;
+        Cursor userCursor;
+        db = databaseHelper.getWritableDatabase();
+        userCursor = db.rawQuery(SQLScripts.getReceivedRequestsListScript(userID), null);
+
+        if(userCursor.moveToFirst()){
+            int idColIndex = userCursor.getColumnIndex("id");
+            int nameColIndex = userCursor.getColumnIndex("name");
+
+            do {
+                UserProfiles friend = new UserProfiles(userCursor.getInt(idColIndex), userCursor.getString(nameColIndex), -1);
+                userProfilesArrayList.add(friend);
+
+            } while (userCursor.moveToNext());
+            userCursor.close();
+        } else {
+            userCursor.close();
+        }
+    }
+
+    public void getSentRequestsList(int userID, ArrayList<UserProfiles> userProfilesArrayList){
+        SQLiteDatabase db;
+        Cursor userCursor;
+        db = databaseHelper.getWritableDatabase();
+        userCursor = db.rawQuery(SQLScripts.getSentRequestsListScript(userID), null);
+
+        if(userCursor.moveToFirst()){
+            int idColIndex = userCursor.getColumnIndex("id");
+            int nameColIndex = userCursor.getColumnIndex("name");
+
+
+            do {
+                UserProfiles friend = new UserProfiles(userCursor.getInt(idColIndex), userCursor.getString(nameColIndex), -2);
+                userProfilesArrayList.add(friend);
+
+            } while (userCursor.moveToNext());
+            userCursor.close();
+        } else {
+            userCursor.close();
+        }
+    }
+
+    public void getUnfriendedUserListScript(int userID, ArrayList<UserProfiles> userProfilesArrayList){
+        SQLiteDatabase db;
+        Cursor userCursor;
+        db = databaseHelper.getWritableDatabase();
+        userCursor = db.rawQuery(SQLScripts.getUnfriendedUserListScript(userID), null);
+
+        if(userCursor.moveToFirst()){
+            int idColIndex = userCursor.getColumnIndex("id");
+            int nameColIndex = userCursor.getColumnIndex("name");
+
+
+            do {
+                UserProfiles friend = new UserProfiles(userCursor.getInt(idColIndex), userCursor.getString(nameColIndex), 0);
+                userProfilesArrayList.add(friend);
+
+            } while (userCursor.moveToNext());
+            userCursor.close();
+
+        } else {
+            userCursor.close();
+        }
+    }
+
+    public void deleteLinkFromDb(int firstUserID, int secondUserID){
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        db.execSQL(SQLScripts.getDeletingLinkScript(firstUserID, secondUserID));
+    }
+
+    public void addLinkIntoBd(int firstUserID, int secondUserID){
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        db.execSQL(SQLScripts.getAddingLinkScript(firstUserID, secondUserID));
+        //firstUser - отправитель
+        //secondUser - получатель
+        // 1 - true | -1 - false
+    }
+
+    public void updateDb(int firstUserID, int secondUserID){
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        db.execSQL(SQLScripts.getUpdateScript(firstUserID, secondUserID));
+    }
 }
+

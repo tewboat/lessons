@@ -1,11 +1,13 @@
 package com.example.sql_example.domain;
 
 public class UserProfiles {
-    public final String id;
+    public final int id;
     public final String name;
+    public int isConfirm;
 
-    public UserProfiles(String id, String name) {
+    public UserProfiles(int id, String name, int isConfirm) {
         this.id = id;
         this.name = name;
+        this.isConfirm = isConfirm;
     }
 }
