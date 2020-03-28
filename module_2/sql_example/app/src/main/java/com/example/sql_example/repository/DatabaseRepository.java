@@ -179,9 +179,9 @@ public class DatabaseRepository {
         db.execSQL(SQLScripts.getDeletingLinkScript(firstUserID, secondUserID));
     }
 
-    public void addLinkIntoBd(int firstUserID, int secondUserID){
+    public void addLinkIntoBd(int firstUserID, int secondUserID, int isConfirm){
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        db.execSQL(SQLScripts.getAddingLinkScript(firstUserID, secondUserID));
+        db.execSQL(SQLScripts.getAddingLinkScript(firstUserID, secondUserID, isConfirm));
         //firstUser - отправитель
         //secondUser - получатель
         // 1 - true | -1 - false
@@ -190,6 +190,41 @@ public class DatabaseRepository {
     public void updateDb(int firstUserID, int secondUserID){
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         db.execSQL(SQLScripts.getUpdateScript(firstUserID, secondUserID));
+    }
+    public ArrayList<UserProfiles> getAllUsersListScript(int userID){
+        SQLiteDatabase db;
+        Cursor userCursor;
+        db = databaseHelper.getWritableDatabase();
+        userCursor = db.rawQuery(SQLScripts.getAllUsersScript(userID, true), null);
+        ArrayList<UserProfiles> userProfilesArrayList = new ArrayList<>();
+        if(userCursor.moveToFirst()){
+            int idColIndex = userCursor.getColumnIndex("id");
+            int nameColIndex = userCursor.getColumnIndex("name");
+
+
+            do {
+                UserProfiles friend = new UserProfiles(userCursor.getInt(idColIndex), userCursor.getString(nameColIndex), 0);
+                userProfilesArrayList.add(friend);
+
+            } while (userCursor.moveToNext());
+            userCursor.close();
+            return userProfilesArrayList;
+
+        } else {
+            userCursor.close();
+            return null;
+        }
+    }
+
+    public void deleteAllFromTable(String tableName){
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        db.execSQL(SQLScripts.deleteAllFromTable(tableName));
+    }
+
+    public void initTable(){
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        db.execSQL(SQLScripts.initUsersDbScript());
+        db.execSQL(SQLScripts.initUserLinksDbScript());
     }
 }
 

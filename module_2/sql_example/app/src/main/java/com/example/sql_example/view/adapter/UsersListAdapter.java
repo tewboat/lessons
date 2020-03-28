@@ -26,8 +26,8 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         this.user = user;
     }
 
-    public void updateUserList(ArrayList<UserProfiles> userProfiles){
-        this.userProfilesArrayList = userProfiles;
+    public void updateUserList(UsersInteractor usersInteractor, int userID){
+        userProfilesArrayList = usersInteractor.getUserProfilesList(userID);
         notifyDataSetChanged();
     }
 
@@ -61,14 +61,12 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
             userName = itemView.findViewById(R.id.user_name_recycler_view_item);
             firstButton = itemView.findViewById(R.id.image_button1_recycler_view_item);
             secondButton = itemView.findViewById(R.id.image_button2_recycler_view_item);
-            status = itemView.findViewById(R.id.status_resycler_view_item);
         }
 
         void bind(UserProfiles userProfile, User user){
-            userName.setText(user.name);
+            userName.setText(userProfile.name);
             switch (userProfile.isConfirm){
                 case 1:
-                    status.setText("В списке друзей");
                     firstButton.setBackgroundResource(R.drawable.button_style);
                     secondButton.setBackgroundResource(R.drawable.button_null);
                     firstButton.setText("УДАЛИТЬ");
@@ -76,28 +74,26 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
                         @Override
                         public void onClick(View v) {
                             usersInteractor.deleteLinkFromDb(user.id, userProfile.id);
-                            updateUserList(usersInteractor.getUserList(user.id));
+                            updateUserList(usersInteractor, user.id);
                         }
 
                     });
                     break;
 
                 case 0:
-                    status.setText("Не в списке друзей");
                     firstButton.setBackgroundResource(R.drawable.button_style);
                     secondButton.setBackgroundResource(R.drawable.button_null);
                     firstButton.setText("ДОБАВИТЬ");
                     firstButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            usersInteractor.addLinkIntoDb(user.id, userProfile.id);
-                            updateUserList(usersInteractor.getUserList(user.id));
+                            usersInteractor.addLinkIntoDb(user.id, userProfile.id, -1);
+                            updateUserList(usersInteractor, user.id);
                         }
                     });
                     break;
 
                 case -1:
-                    status.setText("У вас новая заявка");
                     firstButton.setBackgroundResource(R.drawable.button_style);
                     secondButton.setBackgroundResource(R.drawable.button_style);
                     firstButton.setText("ДОБАВИТЬ");
@@ -106,21 +102,22 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
                         @Override
                         public void onClick(View v) {
                             usersInteractor.updateDb(user.id, userProfile.id);
-                            updateUserList(usersInteractor.getUserList(user.id));
+                            updateUserList(usersInteractor, user.id);
                         }
                     });
                     secondButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            secondButton.setText("");
                             usersInteractor.deleteLinkFromDb(user.id, userProfile.id);
-                            updateUserList(usersInteractor.getUserList(user.id));
+                            updateUserList(usersInteractor, user.id);
                         }
                     });
                     break;
 
                 case -2:
-                    status.setText("Ваша заявка ожидает подтверждения");
                     firstButton.setBackgroundResource(R.drawable.button_null);
+                    firstButton.setText("Ожидание");
                     secondButton.setBackgroundResource(R.drawable.button_null);
                     break;
             }

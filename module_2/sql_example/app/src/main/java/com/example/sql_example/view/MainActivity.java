@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -57,9 +58,15 @@ public class MainActivity extends AppCompatActivity {
             User user = usersInteractor.getUser(login, password);
             if (user != null) {
                 Intent intent = new Intent(this, FriendsList.class);
-                intent.putExtra("USER_NAMR", user.name);
+                Log.d("INTENT", "start sending USER_NAME");
+                intent.putExtra("USER_NAME", user.name);
+                Log.d("INTENT", "USER_NAME SENT");
+                Log.d("INTENT", "start sending USER_PASSWORD");
                 intent.putExtra("USER_PASSWORD", user.password);
+                Log.d("INTENT", "USER_PASSWORD SENT");
+                Log.d("INTENT", "starting FriendList activity");
                 startActivity(intent);
+                Log.d("INTENT", "FriendList activity started");
             } else {
                 Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
             }

@@ -30,8 +30,8 @@ public class SQLScripts {
                 ";";
     }
 
-    public static String getAllUsersScript() {
-        return "select * from user;";
+    public static String getAllUsersScript(int userID, boolean flag) {
+        return "select id, name from user where id != " + userID + ";";
     }
 
     public static String getAllUsersScript(int limit) {
@@ -41,13 +41,17 @@ public class SQLScripts {
     }
 
     public static String initUserLinksDbScript(){
-        return "create table userlinks " +
+        return "create table userlinks(" +
                 "id integer primary key autoincrement, " +
                 "firstID integer, " +
                 "secondID integer, " +
-                "isConfirm integer " +
+                "isConfirm integer, " +
                 "foreign key(firstID) references user(id), " +
                 "foreign key(secondID) references user(id));";
+    }
+
+    public static String insertZeroUser(){
+        return "insert into userlinks(firstID, secondID, isConfirm)values(0, 0, 0);";
     }
 
     public static String getFriendListScript(int userID){
@@ -73,7 +77,7 @@ public class SQLScripts {
     public static String getUnfriendedUserListScript(int userID){
         return "select u.id, u.name from user u, userlinks ul " +
                 "where u.id != ul.firstID and u.id != ul.secondID" +
-                "and u.id != " + userID + ";";
+                " and u.id != " + userID + ";";
     }
 
     public static String getDeletingLinkScript(int firstUserID, int secondUserID){
@@ -82,14 +86,19 @@ public class SQLScripts {
                 "(firstID = " + secondUserID + " or secondID = " + secondUserID + ");";
     }
 
-    public static String getAddingLinkScript(int firstUserID, int secondUserID){
+    public static String getAddingLinkScript(int firstUserID, int secondUserID, int isConfirm){
         return "insert into userlinks(firstID, secondID, isConfirm)" +
-                "values(" + firstUserID + ", " + secondUserID + ", -1);";
+                "values(" + firstUserID + ", " + secondUserID + ", " + isConfirm + ");";
     }
 
     public static String getUpdateScript(int firstUserID, int secondUserID){
-        return "uptade userlinks set isConfirm = 1 " +
+        return "update userlinks set isConfirm = 1 " +
                 "where (firstID = " + firstUserID + " or firstID = " + secondUserID + ")" +
                 "and (secondID = " + firstUserID + " or secondID = " + secondUserID + ");";
+    }
+
+    public static String deleteAllFromTable(String tableName){
+        String name = "\"" + tableName + "\"";
+        return "delete * from " + name + ";";
     }
 }

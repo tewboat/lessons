@@ -23,16 +23,14 @@
 
     <AutoCompleteTextView
         android:id="@+id/input_login"
-        android:layout_width="347dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:hint="input login"
         android:imeOptions="actionNext"
         android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/input_pass"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/input_pass"
+        app:layout_constraintStart_toStartOf="@+id/input_pass"
         app:layout_constraintTop_toBottomOf="@+id/text_logo">
 
         <requestFocus />

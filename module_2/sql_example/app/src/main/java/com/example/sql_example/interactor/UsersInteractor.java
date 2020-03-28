@@ -1,6 +1,7 @@
 package com.example.sql_example.interactor;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.sql_example.domain.User;
 import com.example.sql_example.domain.UserProfiles;
@@ -43,11 +44,31 @@ public class UsersInteractor {
     public void deleteLinkFromDb(int firstUserID, int secondUserID){
         repository.deleteLinkFromDb(firstUserID, secondUserID);}
 
-    public void addLinkIntoDb(int firstUserID, int secondUserID){
-        repository.addLinkIntoBd(firstUserID, secondUserID);
+    public void addLinkIntoDb(int firstUserID, int secondUserID, int isConfirm){
+        repository.addLinkIntoBd(firstUserID, secondUserID, isConfirm);
     }
     public void updateDb(int firstUserID, int secondUserID){
         repository.updateDb(firstUserID, secondUserID);
     }
 
+    public ArrayList<UserProfiles> getAllUserList(int userID){
+        return repository.getAllUsersListScript(userID);
+    }
+    public void deleteAllFromTable(String tableName){
+        repository.deleteAllFromTable(tableName);
+    }
+
+    public void initTable(){
+        repository.initTable();
+    }
+    public ArrayList<UserProfiles> getUserProfilesList(int userID){
+        ArrayList<UserProfiles> userProfiles = new ArrayList<>();
+        userProfiles = getUserList(userID);
+        Log.d("UserListTAG", userProfiles.toString());
+        if (userProfiles.size() == 0) {
+            Log.d("UserListTAG", "userProfiles.size() == 0");
+            userProfiles = getAllUserList(userID);
+            Log.d("UserListTAG", userProfiles.toString());
+        }return userProfiles;
+    }
 }
