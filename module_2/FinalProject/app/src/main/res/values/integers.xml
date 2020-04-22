@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="todo_fragment_id">0</integer>
+    <integer name="habits_fragment_id">1</integer>
+    <integer name="goals_fragment_id">2</integer>
+</resources>
